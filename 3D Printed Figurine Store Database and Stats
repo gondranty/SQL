@@ -1,0 +1,33 @@
+/* Creating a table and populating it with values for a mock dungeons and dragons 3D printed figurine store */
+CREATE TABLE mock_store (id INTEGER PRIMARY KEY, figurine TEXT, price INTEGER, size TEXT, hours_to_print INTEGER);
+
+INSERT INTO mock_store VALUES (1, "ogre", 24.99, "large", 7);
+INSERT INTO mock_store VALUES (2, "orc", 14.99, "medium", 3);
+INSERT INTO mock_store VALUES (3, "pseudodragon", 7.99, "small", 1);
+INSERT INTO mock_store VALUES (4, "druid", 14.99, "medium", 3);
+INSERT INTO mock_store VALUES (5, "wizard", 14.99, "medium", 3);
+INSERT INTO mock_store VALUES (6, "fighter", 20.99, "medium", 5);
+INSERT INTO mock_store VALUES (7, "barbarian", 20.99, "medium", 5);
+INSERT INTO mock_store VALUES (8, "dragon", 30.99, "large", 10);
+INSERT INTO mock_store VALUES (9, "gnome", 7.99, "small", 2);
+INSERT INTO mock_store VALUES (10, "ranger", 14.99, "medium", 3);
+INSERT INTO mock_store VALUES (11, "ochre jelly", 14.99, "medium", 4);
+INSERT INTO mock_store VALUES (12, "mimic", 20.99, "medium", 5);
+INSERT INTO mock_store VALUES (13, "rogure", 14.99, "medium", 3);
+INSERT INTO mock_store VALUES (14, "manticore", 24.99, "large", 7);
+INSERT INTO mock_store VALUES (15, "centaur", 24.99, "large", 7);
+
+/* Shows every entry in the table */
+SELECT * FROM mock_store; 
+
+/* Shows prices of each figurine in descending order */
+SELECT figurine, price FROM mock_store ORDER BY price DESC;
+
+/* Shows how long each figurine takes to print */
+SELECT figurine, hours_to_print FROM mock_store ORDER BY hours_to_print DESC;
+
+/* Shows the different sizes of 3D prints and the sum of the hours of all figures of that size */
+SELECT size, SUM(hours_to_print) FROM mock_store GROUP BY size;
+
+/* Shows average 3D printing time of figurines that are of size medium */
+SELECT size, AVG(hours_to_print) FROM mock_store WHERE size = "medium";
