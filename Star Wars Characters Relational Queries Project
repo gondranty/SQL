@@ -1,0 +1,67 @@
+/* Created table with Character names and ages from Star Wars at the time of A New Hope */
+CREATE TABLE star_wars (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    age INTEGER
+);
+
+INSERT INTO star_wars (name, age) VALUES ("Luke Skywalker", 19);
+INSERT INTO star_wars (name, age) VALUES ("Chewbacca", 200);
+INSERT INTO star_wars (name, age) VALUES ("Han Solo", 29);
+INSERT INTO star_wars (name, age) VALUES ("Ben Kenobi", 58);
+INSERT INTO star_wars (name, age) VALUES ("Darth Vader", 41);
+INSERT INTO star_wars (name, age) VALUES ("Emperor Palpatine", 84);
+INSERT INTO star_wars (name, age) VALUES ("Jabba the Hutt", 600);
+INSERT INTO star_wars (name, age) VALUES ("Boba Fett", 32);
+
+/* Created table that pairs id numbers from characters in the star_wars table above */
+CREATE TABLE duos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person1_id INTEGER,
+    person2_id INTEGER
+);
+
+INSERT INTO duos (person1_id, person2_id) VALUES (1, 4);
+INSERT INTO duos (person1_id, person2_id) VALUES (2, 3);
+INSERT INTO duos (person1_id, person2_id) VALUES (5, 6);
+INSERT INTO duos (person1_id, person2_id) VALUES (7, 8);
+
+/* Created table that contains data on the characters weapon of choice and their affiliation/role in Star Wars. */
+CREATE TABLE traits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    weapon TEXT,
+    role TEXT
+);
+
+INSERT INTO traits (person_id, weapon, role) VALUES (1, "Blue Lightsaber", "Jedi");
+INSERT INTO traits (person_id, weapon, role) VALUES (2, "Bowcaster", "Wookie");
+INSERT INTO traits (person_id, weapon, role) VALUES (3, "Pistol", "Smuggler");
+INSERT INTO traits (person_id, weapon, role) VALUES (4, "Blue Lightsaber", "Jedi");
+INSERT INTO traits (person_id, weapon, role) VALUES (5, "Red Lightsaber", "Sith");
+INSERT INTO traits (person_id, weapon, role) VALUES (6, "Force Lightning", "Sith");
+INSERT INTO traits (person_id, weapon, role) VALUES (7, "Rancor", "Daimyo");
+INSERT INTO traits (person_id, weapon, role) VALUES (8, "Blaster Rifle", "Bounty Hunter");
+
+/* This query does a join between the star_wars table and the duos table to display the pairs of characters partnered together */
+SELECT a.name AS Partner1, b.name AS Partner2
+    FROM duos
+    JOIN star_wars a
+    ON a.id = duos.person1_id
+    JOIN star_wars b
+    ON b.id = duos.person2_id;
+
+/* This query joins the star_wars table and the traits table to display the characters names with their weapon and role in Star Wars
+SELECT star_wars.name, traits.weapon, traits.role
+    FROM star_wars
+    LEFT OUTER JOIN traits
+    ON star_wars.id = traits.person_id;
+
+/* This query joins the star_wars table and traits table again but this time displays the Character and their age 
+if they are over the age of 40 and are affiliated with either the Jedi or the Sith */
+SELECT star_wars.name, star_wars.age, traits.role
+    FROM star_wars
+    LEFT OUTER JOIN traits
+    ON star_wars.id = traits.person_id
+    WHERE star_wars.age > 40 AND traits.role = "Jedi" OR traits.role = "Sith"
+    ORDER BY star_wars.age DESC;
