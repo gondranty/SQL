@@ -44,8 +44,20 @@ SELECT artist_name, track_name, duration_ms
 FROM BIT_DB.Spotifydata
 ORDER BY duration_ms DESC LIMIT 1;
 
---Lastly I found the artist with the least average danceability
+--Fourth I found the artist with the least average danceability
 SELECT track_name, avg(danceability) as Avg_danceability
 FROM BIT_DB.Spotifydata
 GROUP BY track_name
 ORDER BY Avg_danceability ASC LIMIT 1;
+
+--Lastly I created a common table expression (CTE) to store the average popularity of the artists and then ran a query to output the ones with a rating of 90
+or above and tagged them as a 'Top Star'.
+WITH popTable AS (
+    SELECT artist_name, avg(popularity) as Pop
+    FROM Spotifydata
+    GROUP BY artist_name
+    )
+
+SELECT artist_name, Pop, 'Top Star' AS tag
+FROM popTable
+WHERE Pop >= 90;
